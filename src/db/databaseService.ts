@@ -70,4 +70,9 @@ export class DatabaseService {
     );
     await ImageModel.sync();
   };
+
+  shutDown = async (connection: Sequelize): Promise<void> => {
+    connection.close();
+    console.log("Database has gracefuly disconnected");
+  };
 }

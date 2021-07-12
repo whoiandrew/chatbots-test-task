@@ -62,3 +62,7 @@ app.listen(Constants.PORT, async () => {
   connection = await databaseService.createConnection();
   console.log(`listening on port ${Constants.PORT}...`);
 });
+
+process.on("SIGTERM", async () => {
+  await databaseService.shutDown(connection);
+});
