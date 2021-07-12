@@ -25,6 +25,14 @@ export class DatabaseService {
     return id;
   };
 
+  getImageByParams = async (queryParams: ImageProps): Promise<Image[]> => {
+    console.log(queryParams);
+    const images: Image[] = await ImageModel.findAll({
+      where: queryParams,
+    });
+    return images;
+  };
+
   initTables = async (sequelize: Sequelize): Promise<void> => {
     ImageModel.init(
       {

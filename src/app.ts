@@ -40,6 +40,24 @@ app.post("/upload/dog/image", (req: Request, res: Response): void => {
     });
 });
 
+app.get(
+  "/list/dog/images",
+  async (req: Request, res: Response): Promise<void> => {
+    const { height, width } = req.query;
+    const queryParams: ImageProps = {
+      height: parseInt(height as string),
+      width: parseInt(width as string),
+    };
+    const notEmptyQueryParams: ImageProps = Object.fromEntries(
+      Object.entries(queryParams).filter((elem) => {
+        return Boolean(elem[1]) && elem[1];
+      })
+    );
+    const images = await databaseService.getImageByParams(notEmptyQueryParams);
+    res.send({ images });
+  }
+);
+
 app.listen(Constants.PORT, async () => {
   connection = await databaseService.createConnection();
   console.log(`listening on port ${Constants.PORT}...`);
